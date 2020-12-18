@@ -72,3 +72,130 @@ CREATE UNIQUE INDEX product_description_idx ON Products ( description, code, pro
 ##################
 ### PROCEDURES ###
 ##################
+
+### SELECT ALL ###
+USE `eidans`;
+DROP procedure IF EXISTS `SelectAll`;
+USE `eidans`;
+DROP procedure IF EXISTS `eidans`.`SelectAll`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectAll`()
+BEGIN
+	Select 
+    p.ID as "ProductID", 
+    p.description as "ProductDescription", 
+    p.code as "ProductCode", 
+    t.description as "ProductTypeDescription",
+    t.code as "ProductTypeCode",
+    p.amount, 
+    p.price 
+    from products as p, producttypes as t
+    WHERE p.product_type_ID = t.ID;
+END$$
+DELIMITER ;
+
+### SELECT ALL TYPES ###
+USE `eidans`;
+DROP procedure IF EXISTS `SelectAllTypes`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE PROCEDURE `SelectAllTypes` ()
+BEGIN
+SELECT 
+	ID, description, code
+    FROM ProductTypes;
+END$$
+DELIMITER ;
+
+### DELETE PRODUCT ###
+USE `eidans`;
+DROP procedure IF EXISTS `DeleteProduct`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE PROCEDURE `DeleteProduct` (
+IN del_ID INT)
+BEGIN
+DELETE FROM Products WHERE ID = del_ID;
+END$$
+DELIMITER ;
+
+### EDIT PRODUCT ###
+USE `eidans`;
+DROP procedure IF EXISTS `EditProduct`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditProduct`(
+IN new_ID INT,
+IN new_desc VARCHAR(255),
+IN new_code VARCHAR(16),
+IN new_product_type_ID INT,
+IN new_amount INT,
+IN new_price DECIMAL)
+BEGIN
+UPDATE Products SET 
+	description = new_desc, 
+	code = new_code,
+    product_type_ID = new_product_type_ID,
+    amount = new_amount,
+    price = new_price
+	WHERE ID = new_ID;
+END$$
+
+DELIMITER ;
+
+### FIND PRODUCT BY ID ###
+USE `eidans`;
+DROP procedure IF EXISTS `FindProductByID`;
+USE `eidans`;
+DROP procedure IF EXISTS `eidans`.`FindProductByID`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `FindProductByID`(
+in new_ID int)
+BEGIN
+	SELECT
+    p.ID as "ProductID", 
+    p.description as "ProductDescription", 
+    p.code as "ProductCode", 
+    t.ID as "Type_ID",
+    t.description as "ProductTypeDescription",
+    t.code as "ProductTypeCode",
+    p.amount, 
+    p.price 
+    from products as p, producttypes as t
+    WHERE p.ID = new_ID 
+    AND p.product_type_ID = t.ID;
+END$$
+DELIMITER ;
+
+### ADD PRODUCT ###
+USE `eidans`;
+DROP procedure IF EXISTS `AddProduct`;
+DELIMITER $$
+USE `eidans`$$
+
+CREATE PROCEDURE `AddProduct` (
+IN new_desc VARCHAR(255),
+IN new_code VARCHAR(16),
+IN new_product_type_ID INT,
+IN new_amount INT,
+IN new_price DECIMAL)
+BEGIN
+INSERT INTO Products (
+	description, 
+    code, 
+    product_type_ID, 
+    amount, 
+    price) 
+    VALUES (new_desc, 
+    new_code,
+    new_product_type_ID,
+    new_amount,new_price);
+END$$
+DELIMITER ;

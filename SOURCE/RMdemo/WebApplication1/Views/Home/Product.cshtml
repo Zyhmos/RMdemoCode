@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebApplication1.Models.Product>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product</title>
+</head>
+<body>
+    <div>
+        <input id="btNew" type="button" value="➕" />
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>| ID </th>
+                <th>| Description </th>
+                <th>| Code </th>
+                <th>| Type </th>
+                <th>| Amount </th>
+                <th>| Price </th>
+                <th>| Edit </th>
+                <th>| Delete </th>
+            </tr>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.ProductID</td>
+                    <td>@product.Description</td>
+                    <td>@product.Code</td>
+                    <td>@product.Type</td>
+                    <td>@product.Amount</td>
+                    <td>@product.Price</td>
+                    <td><input id="btEdit" type="submit" value="🛠"  /></td>
+                    <td><input id="btDel" type="button" value="❌" /></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

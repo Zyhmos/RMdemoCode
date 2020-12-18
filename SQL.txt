@@ -1,0 +1,74 @@
+################################
+### CREATE USER AND DATABASE ###
+################################
+
+CREATE USER 'rm' IDENTIFIED BY 'pass';
+GRANT ALL PRIVILEGES ON *.* TO 'rm' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON eidans TO 'rm';
+
+SHOW DATABASES;
+CREATE DATABASE eidans;
+SHOW DATABASES;
+USE eidans;
+
+#####################
+### CREATE TABLES ###
+#####################
+
+CREATE TABLE ProductTypes (
+    ID INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID),
+    Description VARCHAR(255) NOT NULL,
+    Code VARCHAR(16));
+
+CREATE TABLE Products (
+    ID INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID),
+    description VARCHAR(255) NOT NULL,
+    code VARCHAR(16),
+	product_type_ID INT NOT NULL,
+	FOREIGN KEY (product_type_ID) REFERENCES ProductTypes(ID),
+	amount INT,
+	price DECIMAL);
+);
+
+#######################
+### POPULATE TABLES ###
+#######################
+
+INSERT INTO ProductTypes (description, code) VALUES ( "Electronics", "ELC");
+INSERT INTO ProductTypes (description, code) VALUES ( "Food", "FOOD");
+INSERT INTO ProductTypes (description, code) VALUES ( "Pets", "PET");
+INSERT INTO ProductTypes (description, code) VALUES ( "Clothing", "CLO");
+INSERT INTO ProductTypes (description, code) VALUES ( "Miscellaneous", "MISC");
+
+
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Motorola Moto G", "MOTOMG",1,10,13.37);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Nokia 3310", "BRICK",1,10,42.00);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Alcatel 360", "ALCA",1,49,60.99);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Croissant", "BREAD",2,123,0.99);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Baguette", "BREAD",2,654,1.37);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Bugatti", "BREAD",2,1,7657643743.99);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Absolut", "ABS",2,999,15.00);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Valdo Rice", "RICE",2,40,2.64);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Rolton", "ROLT",2,420,0.01);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Dalmatian", "DAL",3,2,346.20);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Mynx", "MNX",3,5,204.00);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Sugar Glider", "SUGL",3,3,200.00);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Giant African Snail", "SNA",3,1,50.00);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Hedgehog", "SONIC",3,1,92.99);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Billy Jean is not my girl", "JEANS",4,20,13.37);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Victoria Secret Foufa de mo ferriere", "VSDRESS",4,2,54677.57);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Baseball Cap", "BCAP",4,80,80.80);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Alien", "ALIEN",5,100000,5.99);
+INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Predator", "PRED",5,1000,10.99);
+
+################
+### INDEXING ###
+################
+
+CREATE UNIQUE INDEX product_description_idx ON Products ( description, code, product_type_ID);
+
+##################
+### PROCEDURES ###
+##################

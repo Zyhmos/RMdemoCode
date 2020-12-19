@@ -56,7 +56,8 @@ namespace WebApplication1.Models
                         product.ProductID = id;
                         product.Description = Convert.ToString(dt.Rows[0]["ProductDescription"]);
                         product.Code = Convert.ToString(dt.Rows[0]["ProductCode"]);
-                        product.Type = Convert.ToInt32(dt.Rows[0]["TypeID"]);
+                        product.TypeID = Convert.ToInt32(dt.Rows[0]["TypeID"]);
+                        product.TypeCode = Convert.ToString(dt.Rows[0]["TypeCode"]);
                         product.Amount = Convert.ToInt32(dt.Rows[0]["Amount"]);
                         product.Price = Convert.ToDouble(dt.Rows[0]["Price"]);
                     }
@@ -105,7 +106,7 @@ namespace WebApplication1.Models
                     ProductID = Convert.ToInt32(item["ProductID"]),
                     Description = Convert.ToString(item["ProductDescription"]),
                     Code = Convert.ToString(item["ProductCode"]),
-                    Type = Convert.ToInt32(item["TypeID"]),
+                    TypeCode = Convert.ToString(item["TypeCode"]),
                     Amount = Convert.ToInt32(item["Amount"]),
                     Price = Convert.ToDouble(item["Price"])
                     });
@@ -129,7 +130,7 @@ namespace WebApplication1.Models
                         cmd.Parameters.AddWithValue("@new_ID", product.ProductID);
                         cmd.Parameters.AddWithValue("@new_desc", product.Description);
                         cmd.Parameters.AddWithValue("@new_code", product.Code);
-                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.Type);
+                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.TypeID);
                         cmd.Parameters.AddWithValue("@new_amount", product.Amount);
                         cmd.Parameters.AddWithValue("@new_price", product.Price);
                         cmd.ExecuteNonQuery();
@@ -143,7 +144,7 @@ namespace WebApplication1.Models
             }
         }
 
-        public void GetAllTypeData()
+        public List<Type> GetAllTypeData()
         {
             DataTable dt = new DataTable();
             try
@@ -168,6 +169,22 @@ namespace WebApplication1.Models
             {
                 throw;
             }
+
+            var typeList = new List<Type>();
+            if (dt != null)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    typeList.Add(new Type
+                    {
+                        TypeID = Convert.ToInt32(item["ID"]),
+                        Description = Convert.ToString(item["Description"]),
+                        Code = Convert.ToString(item["Code"])
+                    });
+                }
+            }
+
+            return typeList;
         }
 
         public void AddNew(Product product)
@@ -183,7 +200,7 @@ namespace WebApplication1.Models
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@new_desc", product.Description);
                         cmd.Parameters.AddWithValue("@new_code", product.Code);
-                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.Type);
+                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.TypeID);
                         cmd.Parameters.AddWithValue("@new_amount", product.Amount);
                         cmd.Parameters.AddWithValue("@new_price", product.Price);
                         cmd.ExecuteNonQuery();

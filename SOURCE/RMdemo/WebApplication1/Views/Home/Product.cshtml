@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.Product>
+﻿@model WebApplication1.Models.ProductModel
 @{
     Layout = null;
 }
@@ -23,13 +23,13 @@
                 <th>| Edit </th>
                 <th>| Delete </th>
             </tr>
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
         <tr>
             <td>@product.ProductID</td>
             <td>@product.Description</td>
             <td>@product.Code</td>
-            <td>@product.Type</td>
+            <td>@product.TypeCode</td>
             <td>@product.Amount</td>
             <td>@product.Price</td>
             <td>

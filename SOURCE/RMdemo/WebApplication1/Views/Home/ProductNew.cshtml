@@ -1,4 +1,4 @@
-﻿
+﻿@model WebApplication1.Models.ProductModel
 @{
     Layout = null;
 }
@@ -16,11 +16,19 @@
             <input id="btCancel" type="button" value="🡄" onclick="@("window.location.href='" + @Url.Action("Product", "home")+"'");" />
             <input id="btSave" type="submit" value="💾" />
             <table class="table table-bordered table-responsive table-hover">
-                <tr><td>Description:</td><td><input id="tbDescription" name="tbDescription" type="text"/></td></tr>
-                <tr><td>Code:</td><td><input id="tbCode" name="tbCode" type="text"/></td></tr>
-                <tr><td>Type:</td><td><input id="tbType" name="tbType" type="text"/></td></tr>
-                <tr><td>Amount:</td><td><input id="tbAmount" name="tbAmount" type="text"/></td></tr>
-                <tr><td>Price:</td><td><input id="tbPrice" name="tbPrice" type="text"  /></td></tr>
+                <tr><td>Description:</td><td><input id="tbDescription" name="tbDescription" type="text" /></td></tr>
+                <tr><td>Code:</td><td><input id="tbCode" name="tbCode" type="text" /></td></tr>
+                <tr>
+                    <td>Type:</td>
+                    <td>
+                        @Html.DropDownList(
+                            "ddlType",
+                            new SelectList(Model.Types, "TypeID", "Description"),
+                            new {@class = "form-control"})
+                    </td>
+                </tr>
+                <tr><td>Amount:</td><td><input id="tbAmount" name="tbAmount" type="text" /></td></tr>
+                <tr><td>Price:</td><td><input id="tbPrice" name="tbPrice" type="text" /></td></tr>
             </table>
         </form>
     </div>

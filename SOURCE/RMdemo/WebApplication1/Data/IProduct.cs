@@ -11,7 +11,8 @@ namespace WebApplication1.Data
         int ProductID { get; set; }
         string Description { get; set; }
         string Code { get; set; }
-        int Type { get; set; }
+        int TypeID { get; set; }
+        string TypeCode { get; set; }
         int Amount { get; set; }
         double Price { get; set; }
     }

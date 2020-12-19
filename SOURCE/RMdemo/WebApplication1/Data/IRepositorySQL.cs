@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
     interface IRepositorySQL
     {
-        void GetAllData();
-        void FindByID(int id);
+        List<Product> GetAllData();
+        Product FindByID(int id);
         void DeleteByID(int id);
     }
 }

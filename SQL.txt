@@ -73,28 +73,32 @@ CREATE UNIQUE INDEX product_description_idx ON Products ( description, code, pro
 ### PROCEDURES ###
 ##################
 
-### SELECT ALL ###
+### ProductsGetAll ###
 USE `eidans`;
-DROP procedure IF EXISTS `SelectAll`;
-USE `eidans`;
-DROP procedure IF EXISTS `eidans`.`SelectAll`;
+DROP procedure IF EXISTS `eidans`.`ProductsGetAll`;
+;
+
 DELIMITER $$
 USE `eidans`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SelectAll`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ProductsGetAll`()
 BEGIN
 	Select 
     p.ID as "ProductID", 
     p.description as "ProductDescription", 
     p.code as "ProductCode", 
-    t.description as "ProductTypeDescription",
-    t.code as "ProductTypeCode",
-    p.amount, 
-    p.price 
+    t.description as "TypeDescription",
+    t.CODE as "TypeCode",
+    t.ID as "TypeID",
+    p.amount as "Amount", 
+    p.price as "Price" 
     from products as p, producttypes as t
     WHERE p.product_type_ID = t.ID;
 END$$
+
 DELIMITER ;
+;
+
+
 
 ### SELECT ALL TYPES ###
 USE `eidans`;
@@ -149,13 +153,6 @@ END$$
 DELIMITER ;
 
 ### FIND PRODUCT BY ID ###
-USE `eidans`;
-DROP procedure IF EXISTS `FindProductByID`;
-USE `eidans`;
-DROP procedure IF EXISTS `eidans`.`FindProductByID`;
-DELIMITER $$
-USE `eidans`$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `FindProductByID`(
 in new_ID int)
 BEGIN
@@ -163,16 +160,15 @@ BEGIN
     p.ID as "ProductID", 
     p.description as "ProductDescription", 
     p.code as "ProductCode", 
-    t.ID as "Type_ID",
-    t.description as "ProductTypeDescription",
-    t.code as "ProductTypeCode",
+    t.ID as "TypeID",
+    t.description as "TypeDescription",
+    t.code as "TypeCode",
     p.amount, 
     p.price 
     from products as p, producttypes as t
     WHERE p.ID = new_ID 
     AND p.product_type_ID = t.ID;
-END$$
-DELIMITER ;
+END
 
 ### ADD PRODUCT ###
 USE `eidans`;

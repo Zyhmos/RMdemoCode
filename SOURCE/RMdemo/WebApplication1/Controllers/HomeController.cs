@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Product", "Home");
         }
 
         public ActionResult About()
@@ -29,29 +29,57 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-
         public ActionResult Product()
         {
-            ViewBag.Message = "Products";
-            var model = new List<Product>
-            {
-                new Product { ProductID = 1, Description = "TEST", Code = "TEST", Type = 1, Amount = 5, Price = 10.45 },
-                new Product { ProductID = 1, Description = "TEST", Code = "TEST", Type = 1, Amount = 5, Price = 10.45 },
-                new Product { ProductID = 1, Description = "TEST", Code = "TEST", Type = 1, Amount = 5, Price = 10.45 },
-                new Product { ProductID = 1, Description = "TEST", Code = "TEST", Type = 1, Amount = 5, Price = 10.45 },
-                new Product { ProductID = 1, Description = "TEST", Code = "TEST", Type = 1, Amount = 5, Price = 10.45 }
-            };
+            var productManager = new ProductSQL();
+            var model = productManager.GetAllData();
             return View(model);
         }
 
-        public ActionResult ProductAdd()
+        [HttpGet]
+        [Route("Home/ProductEdit/{id:int}")]
+        public ActionResult ProductEdit(int id)
+        {
+            var productManager = new ProductSQL();
+            var model = productManager.FindByID(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("Home/ProductDelete/{id:int}")]
+        public ActionResult ProductDelete(int id)
+        {
+            var productManager = new ProductSQL();
+            productManager.DeleteByID(id);
+            return RedirectToAction("Product", "Home");
+        }
+
+        public ActionResult ProductNew()
         {
             return View();
         }
 
-        public ActionResult ProductEdit()
+        public ActionResult ProductSave()
         {
-            return View();
+            var productManager = new ProductSQL();
+            var product = new Product
+            {
+                ProductID = Convert.ToInt32(Request.Form["hdid"]),
+                Description = Request.Form["tbDescription"],
+                Code = Request.Form["tbCode"],
+                Type = Convert.ToInt32(Request.Form["tbType"]),
+                Amount = Convert.ToInt32(Request.Form["tbAmount"]),
+                Price = Convert.ToDouble(Request.Form["tbPrice"])
+            };
+
+            if (product.ProductID > 0) {
+                productManager.Edit(product);}
+            else {
+                productManager.AddNew(product);
+            }
+
+            return RedirectToAction("Product", "Home");
         }
+
     }
 }

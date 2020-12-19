@@ -25,19 +25,21 @@
             </tr>
             @foreach (var product in Model.Products)
             {
-        <tr>
-            <td>@product.ProductID</td>
-            <td>@product.Description</td>
-            <td>@product.Code</td>
-            <td>@product.TypeCode</td>
-            <td>@product.Amount</td>
-            <td>@product.Price</td>
-            <td>
-                    <input id="btEdit" type="submit" value="🛠" onclick="@("window.location.href='" + @Url.Action("ProductEdit", "home") + "?id="+product.ProductID+"'");" />
-            </td>
-            
-            <td><input id="btDel" type="button" value="❌" onclick="@("window.location.href='" + @Url.Action("ProductDelete", "home") + "?id="+product.ProductID+"'");"/></td>
-        </tr>
+                <tr>
+                    <td>@product.ProductID</td>
+                    <td>@product.Description</td>
+                    <td>@product.Code</td>
+                    <td>@product.TypeCode</td>
+                    <td>@product.Amount</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <input id="btEdit" type="submit" value="🛠" onclick="@("window.location.href='" + @Url.Action("ProductEdit", "home") + "?id="+product.ProductID+"'");" />
+                    </td>
+
+                    <td>
+                        <input id="btDel" type="button" value="❌" onclick="@("window.location.href='" + @Url.Action("ProductDelete", "home") + "?id="+product.ProductID+"'");" />
+                    </td>
+                </tr>
             }
         </table>
     </div>

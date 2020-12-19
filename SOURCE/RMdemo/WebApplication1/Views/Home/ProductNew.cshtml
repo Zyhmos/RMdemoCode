@@ -1,4 +1,8 @@
 ﻿@model WebApplication1.Models.ProductModel
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
 @{
     Layout = null;
 }
@@ -11,26 +15,83 @@
     <title>ProductNew</title>
 </head>
 <body>
-    <div>
-        <form action="ProductSave" method="post">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
             <input id="btCancel" type="button" value="🡄" onclick="@("window.location.href='" + @Url.Action("Product", "home")+"'");" />
             <input id="btSave" type="submit" value="💾" />
-            <table class="table table-bordered table-responsive table-hover">
-                <tr><td>Description:</td><td><input id="tbDescription" name="tbDescription" type="text" /></td></tr>
-                <tr><td>Code:</td><td><input id="tbCode" name="tbCode" type="text" /></td></tr>
-                <tr>
-                    <td>Type:</td>
-                    <td>
+            @Html.HiddenFor(model => model.Selected.ProductID, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <table class="table table-bordered table-responsive table-hover form-group">
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.Description, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Selected.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Selected.Description, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.Code, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Selected.Code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Selected.Code, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.TypeID, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Selected.TypeID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Selected.TypeID, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.TypeCode, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
                         @Html.DropDownList(
-                            "ddlType",
-                            new SelectList(Model.Types, "TypeID", "Description"),
-                            new {@class = "form-control"})
-                    </td>
-                </tr>
-                <tr><td>Amount:</td><td><input id="tbAmount" name="tbAmount" type="text" /></td></tr>
-                <tr><td>Price:</td><td><input id="tbPrice" name="tbPrice" type="text" /></td></tr>
-            </table>
-        </form>
-    </div>
+                                     "ddlType",
+                                     new SelectList(Model.Types, "TypeID", "Description", Model.Selected.TypeID),
+                                     new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Selected.TypeCode, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.Amount, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Selected.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Selected.Amount, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Selected.Price, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Selected.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Selected.Price, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+            </tr>
+        </table>
+    }
 </body>
 </html>

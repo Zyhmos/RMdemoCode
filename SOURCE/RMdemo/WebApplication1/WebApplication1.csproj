@@ -121,6 +121,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\IType.cs" />
     <Compile Include="Data\IProduct.cs" />
@@ -168,11 +169,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Product.cshtml" />
-    <Content Include="Views\Home\Producter.cshtml" />
-    <None Include="Views\Home\ProductNew.cshtml" />
-    <Content Include="Views\Home\ProductEdit.cshtml" />
-    <Content Include="Views\Home\ProductTest.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
+    <None Include="Views\Product\ProductNew.cshtml" />
+    <Content Include="Views\Product\ProductEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

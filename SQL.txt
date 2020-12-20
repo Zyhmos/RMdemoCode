@@ -2,72 +2,74 @@
 ### CREATE USER AND DATABASE ###
 ################################
 
-CREATE USER 'rm' IDENTIFIED BY 'pass';
-GRANT ALL PRIVILEGES ON *.* TO 'rm' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON eidans TO 'rm';
-
 SHOW DATABASES;
 CREATE DATABASE eidans;
 SHOW DATABASES;
 USE eidans;
+
+CREATE USER 'rm' IDENTIFIED BY 'pass';
+GRANT ALL PRIVILEGES ON *.* TO 'rm' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON eidans TO 'rm';
 
 #####################
 ### CREATE TABLES ###
 #####################
 
 CREATE TABLE ProductTypes (
-    ID INT NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (ID),
+    ID_Type INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID_Type),
     Description VARCHAR(255) NOT NULL,
-    Code VARCHAR(16));
+    Code VARCHAR(16)
+	);
 
 CREATE TABLE Products (
-    ID INT NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (ID),
-    description VARCHAR(255) NOT NULL,
-    code VARCHAR(16),
-	product_type_ID INT NOT NULL,
-	FOREIGN KEY (product_type_ID) REFERENCES ProductTypes(ID),
-	amount INT,
-	price DECIMAL);
-);
+    ID_Product INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID_Product),
+    Description VARCHAR(255) NOT NULL,
+    Code VARCHAR(16),
+	Type_ID INT NOT NULL,
+	FOREIGN KEY (Type_ID) REFERENCES ProductTypes(ID_Type),
+	Amount INT,
+	Price DECIMAL
+	);
+
 
 #######################
 ### POPULATE TABLES ###
 #######################
 
-INSERT INTO ProductTypes (description, code) VALUES ( "Electronics", "ELC");
-INSERT INTO ProductTypes (description, code) VALUES ( "Food", "FOOD");
-INSERT INTO ProductTypes (description, code) VALUES ( "Pets", "PET");
-INSERT INTO ProductTypes (description, code) VALUES ( "Clothing", "CLO");
-INSERT INTO ProductTypes (description, code) VALUES ( "Miscellaneous", "MISC");
+INSERT INTO ProductTypes (Description, Code) VALUES ( "Miscellaneous", "MISC");
+INSERT INTO ProductTypes (Description, Code) VALUES ( "Electronics", "ELC");
+INSERT INTO ProductTypes (Description, Code) VALUES ( "Food", "FOOD");
+INSERT INTO ProductTypes (Description, Code) VALUES ( "Pets", "PET");
+INSERT INTO ProductTypes (Description, Code) VALUES ( "Clothing", "CLO");
 
 
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Motorola Moto G", "MOTOMG",1,10,13.37);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Nokia 3310", "BRICK",1,10,42.00);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Alcatel 360", "ALCA",1,49,60.99);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Croissant", "BREAD",2,123,0.99);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Baguette", "BREAD",2,654,1.37);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Bugatti", "BREAD",2,1,7657643743.99);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Absolut", "ABS",2,999,15.00);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Valdo Rice", "RICE",2,40,2.64);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Rolton", "ROLT",2,420,0.01);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Dalmatian", "DAL",3,2,346.20);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Mynx", "MNX",3,5,204.00);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Sugar Glider", "SUGL",3,3,200.00);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Giant African Snail", "SNA",3,1,50.00);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Hedgehog", "SONIC",3,1,92.99);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Billy Jean is not my girl", "JEANS",4,20,13.37);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Victoria Secret Foufa de mo ferriere", "VSDRESS",4,2,54677.57);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Baseball Cap", "BCAP",4,80,80.80);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Alien", "ALIEN",5,100000,5.99);
-INSERT INTO Products (description, code, product_type_ID, amount, price) VALUES ("Predator", "PRED",5,1000,10.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Motorola Moto G", "MOTOMG",1,10,13.37);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Nokia 3310", "BRICK",1,10,42.00);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Alcatel 360", "ALCA",1,49,60.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Croissant", "BREAD",2,123,0.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Baguette", "BREAD",2,654,1.37);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Bugatti", "BREAD",2,1,7657643743.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Absolut", "ABS",2,999,15.00);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Valdo Rice", "RICE",2,40,2.64);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Rolton", "ROLT",2,420,0.01);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Dalmatian", "DAL",3,2,346.20);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Mynx", "MNX",3,5,204.00);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Sugar Glider", "SUGL",3,3,200.00);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Giant African Snail", "SNA",3,1,50.00);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Hedgehog", "SONIC",3,1,92.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Billy Jean is not my girl", "JEANS",4,20,13.37);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Victoria Secret Foufa de mo ferriere", "VSDRESS",4,2,54677.57);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Baseball Cap", "BCAP",4,80,80.80);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Alien", "ALIEN",5,100000,5.99);
+INSERT INTO Products (Description, Code, Type_ID, Amount, Price) VALUES ("Predator", "PRED",5,1000,10.99);
 
 ################
 ### INDEXING ###
 ################
 
-CREATE UNIQUE INDEX product_description_idx ON Products ( description, code, product_type_ID);
+CREATE UNIQUE INDEX product_description_idx ON Products ( Description, Code, Type_ID );
 
 ##################
 ### PROCEDURES ###
@@ -76,45 +78,42 @@ CREATE UNIQUE INDEX product_description_idx ON Products ( description, code, pro
 ### ProductsGetAll ###
 USE `eidans`;
 DROP procedure IF EXISTS `eidans`.`ProductsGetAll`;
-;
 
 DELIMITER $$
 USE `eidans`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ProductsGetAll`()
 BEGIN
 	Select 
-    p.ID as "ProductID", 
-    p.description as "ProductDescription", 
-    p.code as "ProductCode", 
-    t.description as "TypeDescription",
-    t.CODE as "TypeCode",
-    t.ID as "TypeID",
-    p.amount as "Amount", 
-    p.price as "Price" 
-    from products as p, producttypes as t
-    WHERE p.product_type_ID = t.ID;
+    p.ID_Product as "ProductID", 
+    p.Description as "ProductDescription", 
+    p.Code as "ProductCode", 
+    t.Description as "TypeDescription",
+    t.Code as "TypeCode",
+    t.ID_Type as "TypeID",
+    p.Amount as "Amount", 
+    p.Price as "Price" 
+    from Products as p, ProductTypes as t
+    WHERE p.Type_ID = t.ID_Type
+	ORDER BY p.ID_Product DESC;
 END$$
 
 DELIMITER ;
-;
 
-
-
-### SELECT ALL TYPES ###
+### TypesGetAll ###
 USE `eidans`;
-DROP procedure IF EXISTS `SelectAllTypes`;
+DROP procedure IF EXISTS `TypesGetAll`;
 DELIMITER $$
 USE `eidans`$$
 
-CREATE PROCEDURE `SelectAllTypes` ()
+CREATE PROCEDURE `TypesGetAll` ()
 BEGIN
 SELECT 
-	ID, description, code
+	ID_Type, Description, Code
     FROM ProductTypes;
 END$$
 DELIMITER ;
 
-### DELETE PRODUCT ###
+### DeleteProduct ###
 USE `eidans`;
 DROP procedure IF EXISTS `DeleteProduct`;
 DELIMITER $$
@@ -123,11 +122,11 @@ USE `eidans`$$
 CREATE PROCEDURE `DeleteProduct` (
 IN del_ID INT)
 BEGIN
-DELETE FROM Products WHERE ID = del_ID;
+DELETE FROM Products WHERE ID_Product = del_ID;
 END$$
 DELIMITER ;
 
-### EDIT PRODUCT ###
+### EditProduct ###
 USE `eidans`;
 DROP procedure IF EXISTS `EditProduct`;
 DELIMITER $$
@@ -137,40 +136,45 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `EditProduct`(
 IN new_ID INT,
 IN new_desc VARCHAR(255),
 IN new_code VARCHAR(16),
-IN new_product_type_ID INT,
+IN new_Type_ID INT,
 IN new_amount INT,
 IN new_price DECIMAL)
 BEGIN
 UPDATE Products SET 
-	description = new_desc, 
-	code = new_code,
-    product_type_ID = new_product_type_ID,
-    amount = new_amount,
-    price = new_price
-	WHERE ID = new_ID;
+	Description = new_desc, 
+	Code = new_code,
+    Type_ID = new_Type_ID,
+    Amount = new_amount,
+    Price = new_price
+	WHERE ID_Product = new_ID;
 END$$
-
 DELIMITER ;
 
-### FIND PRODUCT BY ID ###
+### FindProductByID ###
+USE `eidans`;
+DROP procedure IF EXISTS `FindProductByID`;
+DELIMITER $$
+USE `eidans`$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `FindProductByID`(
 in new_ID int)
 BEGIN
 	SELECT
-    p.ID as "ProductID", 
-    p.description as "ProductDescription", 
-    p.code as "ProductCode", 
-    t.ID as "TypeID",
-    t.description as "TypeDescription",
-    t.code as "TypeCode",
-    p.amount, 
-    p.price 
-    from products as p, producttypes as t
-    WHERE p.ID = new_ID 
-    AND p.product_type_ID = t.ID;
-END
+    p.ID_Product as "ProductID", 
+    p.Description as "ProductDescription", 
+    p.Code as "ProductCode", 
+    t.ID_Type as "TypeID",
+    t.Description as "TypeDescription",
+    t.Code as "TypeCode",
+    p.Amount, 
+    p.Price 
+    from Products as p, ProductTypes as t
+    WHERE p.ID_Product = new_ID 
+    AND p.Type_ID = t.ID_Type;
+END$$
+DELIMITER ;
 
-### ADD PRODUCT ###
+### AddProduct ###
 USE `eidans`;
 DROP procedure IF EXISTS `AddProduct`;
 DELIMITER $$
@@ -179,19 +183,20 @@ USE `eidans`$$
 CREATE PROCEDURE `AddProduct` (
 IN new_desc VARCHAR(255),
 IN new_code VARCHAR(16),
-IN new_product_type_ID INT,
+IN new_Type_ID INT,
 IN new_amount INT,
 IN new_price DECIMAL)
 BEGIN
 INSERT INTO Products (
-	description, 
-    code, 
-    product_type_ID, 
-    amount, 
-    price) 
+	Description, 
+    Code, 
+    Type_ID, 
+    Amount, 
+    Price) 
     VALUES (new_desc, 
     new_code,
-    new_product_type_ID,
-    new_amount,new_price);
+    new_Type_ID,
+    new_amount,
+	new_price);
 END$$
 DELIMITER ;

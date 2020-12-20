@@ -7,10 +7,12 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
-    interface IRepositorySQL
+    interface IProductManager
     {
         List<Product> GetAllData();
         Product FindByID(int id);
         void DeleteByID(int id);
+        void Edit(Product product);
+        List<Models.Type> GetAllTypeData();
     }
 }

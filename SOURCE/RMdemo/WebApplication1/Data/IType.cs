@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Data
 {
-    interface IProductType
+    interface IType
     {
         int TypeID { get; set; }
         string Description { get; set; }

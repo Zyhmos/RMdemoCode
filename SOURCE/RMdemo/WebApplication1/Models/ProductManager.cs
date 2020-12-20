@@ -1,15 +1,19 @@
-﻿using MySql.Data.MySqlClient;
+﻿//RMA 20/12/20 TFS-[Practice Task] File Creation
+
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using WebApplication1.Data;
 
 namespace WebApplication1.Models
 {
-    public class ProductSQL : IRepositorySQL
+    public class ProductManager : IProductManager
     {
+        /// <summary>
+        /// Delete product with this ID
+        /// </summary>
+        /// <param name="id">Products ID</param>
         public void DeleteByID(int id)
         {
             try
@@ -34,6 +38,11 @@ namespace WebApplication1.Models
             }
         }
 
+        /// <summary>
+        /// Find a product by its ID
+        /// </summary>
+        /// <param name="id">Product ID</param>
+        /// <returns>Product with this ID</returns>
         public Product FindByID(int id)
         {
             var product = new Product();
@@ -70,7 +79,11 @@ namespace WebApplication1.Models
             }
             return product;
         }
-
+        
+        /// <summary>
+        /// Get full product list
+        /// </summary>
+        /// <returns>List of products</returns>
         public List<Product> GetAllData()
         {
             DataTable dt = new DataTable();
@@ -97,6 +110,7 @@ namespace WebApplication1.Models
                 throw;
             }
 
+            //NOTE: Could've put this into db reader.
             var ProductList = new List<Product>();
             if (dt != null)
             {
@@ -116,6 +130,10 @@ namespace WebApplication1.Models
             return ProductList;
         }
 
+        /// <summary>
+        /// Change products values in DB of a product with corresponding ID.
+        /// </summary>
+        /// <param name="product"> New product values with old ID </param>
         public void Edit(Product product)
         {
             try
@@ -130,7 +148,7 @@ namespace WebApplication1.Models
                         cmd.Parameters.AddWithValue("@new_ID", product.ProductID);
                         cmd.Parameters.AddWithValue("@new_desc", product.Description);
                         cmd.Parameters.AddWithValue("@new_code", product.Code);
-                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.TypeID);
+                        cmd.Parameters.AddWithValue("@new_Type_ID", product.TypeID);
                         cmd.Parameters.AddWithValue("@new_amount", product.Amount);
                         cmd.Parameters.AddWithValue("@new_price", product.Price);
                         cmd.ExecuteNonQuery();
@@ -144,6 +162,10 @@ namespace WebApplication1.Models
             }
         }
 
+        /// <summary>
+        /// Get all product TYPE list.
+        /// </summary>
+        /// <returns>List of all product types.</returns>
         public List<Type> GetAllTypeData()
         {
             DataTable dt = new DataTable();
@@ -153,7 +175,7 @@ namespace WebApplication1.Models
                 using (MySqlConnection con = new MySqlConnection(constring))
                 {
                     con.Open();
-                    using (MySqlCommand cmd = new MySqlCommand("SelectAllTypes", con))
+                    using (MySqlCommand cmd = new MySqlCommand("TypesGetAll", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.ExecuteNonQuery();
@@ -177,7 +199,7 @@ namespace WebApplication1.Models
                 {
                     typeList.Add(new Type
                     {
-                        TypeID = Convert.ToInt32(item["ID"]),
+                        TypeID = Convert.ToInt32(item["ID_Type"]),
                         Description = Convert.ToString(item["Description"]),
                         Code = Convert.ToString(item["Code"])
                     });
@@ -187,6 +209,10 @@ namespace WebApplication1.Models
             return typeList;
         }
 
+        /// <summary>
+        /// Adds a new product to the database.
+        /// </summary>
+        /// <param name="product">Product that needs to be added.</param>
         public void AddNew(Product product)
         {
             try
@@ -200,7 +226,7 @@ namespace WebApplication1.Models
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@new_desc", product.Description);
                         cmd.Parameters.AddWithValue("@new_code", product.Code);
-                        cmd.Parameters.AddWithValue("@new_product_type_ID", product.TypeID);
+                        cmd.Parameters.AddWithValue("@new_Type_ID", product.TypeID);
                         cmd.Parameters.AddWithValue("@new_amount", product.Amount);
                         cmd.Parameters.AddWithValue("@new_price", product.Price);
                         cmd.ExecuteNonQuery();
@@ -210,7 +236,6 @@ namespace WebApplication1.Models
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
